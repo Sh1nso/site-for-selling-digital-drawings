@@ -6,11 +6,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Bid } from './bid.entity';
 import { Category } from './category.entity';
 import { ContentComment } from './comment.entity';
 import { User } from './user.entity';
 
-enum AuctionDuration {
+export enum AuctionDuration {
   oneDay = 86400,
   threeDays = 259200,
   oneWeek = 604800,
@@ -35,10 +36,14 @@ export class Auction {
 
   @Column({
     name: 'rating',
+    default: 0,
   })
   popularityRating: number;
 
-  @Column()
+  @Column({
+    nullable: true,
+    default: 0,
+  })
   like: number;
 
   @Column({
@@ -48,7 +53,9 @@ export class Auction {
   })
   duration: AuctionDuration;
 
-  @Column()
+  @Column({
+    default: true,
+  })
   is_active: boolean;
 
   @CreateDateColumn()
@@ -68,4 +75,9 @@ export class Auction {
     onDelete: 'CASCADE',
   })
   comments: ContentComment[];
+
+  @OneToMany(() => Bid, (bid) => bid.auction, {
+    onDelete: 'CASCADE',
+  })
+  bids: Bid[];
 }

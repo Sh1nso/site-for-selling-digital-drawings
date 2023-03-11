@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Auction } from './auction.entity';
+import { Bid } from './bid.entity';
 import { ContentComment } from './comment.entity';
 
 @Entity()
@@ -16,6 +17,9 @@ export class User {
   @Column()
   email: string;
 
+  @Column()
+  password: string;
+
   @OneToMany(() => Auction, (auction) => auction.owner, {
     onDelete: 'CASCADE',
   })
@@ -25,4 +29,9 @@ export class User {
     onDelete: 'CASCADE',
   })
   comments: ContentComment[];
+
+  @OneToMany(() => Bid, (bid) => bid.owner, {
+    onDelete: 'CASCADE',
+  })
+  bids: Bid[];
 }

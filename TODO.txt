@@ -1,0 +1,2 @@
+Slug for auctions?
+Uniq UUID for auctions?
